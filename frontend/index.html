@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Document</title>
 </head>
 <body>
@@ -16,17 +17,22 @@
         </div>
         <!-- the store page -->
         <div v-if="currentPage==2">
+            <div class="checkout" @click="switchPage(3)">checkout</div>
             <div v-for="product in products" >
-                <h1>{{product.title}}</h1>
-                <h3>{{product.price}}</h3>
-                <h2>{{product.description}}</h2>
-                <img v-bind:src="product.image" style="max-height:100px; max-width:100px;">
+                <product v-bind:item="product" v-bind:add-to-cart-callback="addToCart"></product>
             </div>
         </div>
 
         <!-- checkout page -->
         <div v-if="currentPage==3">
             <h1>Checkout</h1>
+            <div @click="switchPage(2)">Back to store</div>
+            <div>Total Price: {{totalPrice}}</div>
+
+            <div v-for="(items, index) in cart">
+                <productcheckout v-bind:item="items" v-bind:add-to-cart-callback="addToCart" :remove-item-callback="removeFromCart" :index="index"></productcheckout>
+            </div>
+            
         </div>
         
 
